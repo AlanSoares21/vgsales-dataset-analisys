@@ -1,6 +1,6 @@
 import os
 
-def getPath():
+def getDatasetPath():
     path = os.getenv("DatasetPath")
     if path == None:
         return './data'
