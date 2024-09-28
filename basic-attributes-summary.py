@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from utils import getDatasetPath
 
@@ -27,7 +28,8 @@ files = [
             'Rest of World': ['mode'],
             'Global': ['mode']
         },
-        'count': ['Genre', 'Year']
+        'count': ['Genre', 'Year'],
+        'countOutput': 'png'
     },
     {
         'name': 'XboxOne_GameSales.csv',
@@ -50,7 +52,8 @@ files = [
             'Rest of World': ['mode'],
             'Global': ['mode']
         },
-        'count': ['Genre', 'Year']
+        'count': ['Genre', 'Year'],
+        'countOutput': 'png'
     },
     {
         'name': 'Video_Games_Sales_as_at_22_Dec_2016.csv',
@@ -78,19 +81,48 @@ files = [
             'User_Score': ['mode'],
             'User_Count': ['mode']
         },
-        'count': ['Platform', 'Year_of_Release', 'Genre', 'Publisher', 'Developer', 'Rating']
+        'count': ['Platform', 'Year_of_Release', 'Genre', 'Publisher', 'Developer', 'Rating'],
+        'countOutput': 'csv'
     }
 ]
 
+def clearAxes(ax):
+    ax.clear()
+    ax.axis('off')
+
+def newAxes():
+    ax = plt.subplot()
+    clearAxes(ax)
+    return ax
+
 def getColumnsData(file, data: pd.DataFrame):
+    imagesPath= os.path.join(dt_path, file['name'][:-4])
+    if not os.path.exists(imagesPath):
+        os.mkdir(imagesPath)
     print('statisticts for ' + file['name'])
+    print('output in: ' + imagesPath)
     print('---')
-    print(data.agg(file['agg']))
+    agg1_result = data.agg(file['agg'])
+    ax = newAxes()
+    pd.plotting.table(ax, agg1_result, loc='center')
+    plt.savefig(os.path.join(imagesPath, 'agg1.png'), dpi=500)
+    print(agg1_result)
     print('---')
-    print(data.agg(file['agg2']))
+    agg2_result = data.agg(file['agg2'])
+    clearAxes(ax)
+    pd.plotting.table(ax, agg2_result, loc='center')
+    plt.savefig(os.path.join(imagesPath, 'agg2.png'), dpi=500)
+    print(agg2_result)
     for col_name in file['count']:
         print('---')
-        print(data[col_name].value_counts())
+        count_result = data[col_name].value_counts()
+        if file['countOutput'] == 'png':
+            clearAxes(ax)
+            pd.plotting.table(ax, count_result, loc='center', colWidths=[.2,.1])
+            plt.savefig(os.path.join(imagesPath, col_name + '-values-count.png'), dpi=500)
+        elif file['countOutput'] == 'csv':
+            count_result.to_csv(os.path.join(imagesPath, col_name + '-values-count.csv'), sep=',')
+        print(count_result)
     
 
 
