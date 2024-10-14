@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from utils import getDatasetPath
+from utils import clearAxes, getDatasetPath, newAxes
 
 dt_path = getDatasetPath()
 
@@ -85,15 +85,6 @@ files = [
         'countOutput': 'csv'
     }
 ]
-
-def clearAxes(ax):
-    ax.clear()
-    ax.axis('off')
-
-def newAxes():
-    ax = plt.subplot()
-    clearAxes(ax)
-    return ax
 
 def getColumnsData(file, data: pd.DataFrame):
     imagesPath= os.path.join(dt_path, file['name'][:-4])
