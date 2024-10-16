@@ -17,10 +17,10 @@ def getNonNanValues(gs: pd.DataFrame):
 
 nan_year = getNanValues(data)
 print(nan_year)
-nan_year.to_csv(os.path.join(output_folder, 'empty-years.csv'))
+nan_year.to_csv(os.path.join(output_folder, 'empty-years.csv'), index=False)
 
 print('---')
 
 nonnan_year = getNonNanValues(data)
 print(nonnan_year)
-nonnan_year.to_csv(os.path.join(output_folder, 'non-empty-years.csv'))
+nonnan_year.to_csv(os.path.join(output_folder, 'non-empty-years.csv'), index=False)
