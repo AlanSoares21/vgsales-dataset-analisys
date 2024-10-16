@@ -13,7 +13,7 @@ def getNanValues(gs: pd.DataFrame):
     return gs[gs['Year'].isna()]
 
 def getNonNanValues(gs: pd.DataFrame):
-    return gs[gs['Year'] != gs['Year'].isna()]
+    return gs[gs['Year'] > 0]
 
 nan_year = getNanValues(data)
 print(nan_year)
