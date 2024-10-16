@@ -1,5 +1,7 @@
 import os
-from utils import getDatasetPath
+
+from matplotlib import pyplot as plt
+from utils import ensureExists, getDatasetPath, newAxes
 import pandas as pd
 
 dt_path = getDatasetPath()
@@ -44,6 +46,53 @@ result = genre_sales.sort_values('Global', ascending=False)
 
 print(result)
 
-output_file = os.path.join(dt_path, filename[:-4], 'region_genre.csv')
+output_folder = os.path.join(dt_path, filename[:-4], 'region-genre')
+ensureExists(output_folder)
+output_file = os.path.join(output_folder, 'region_genre.csv')
 
-result.to_csv(output_file, sep=',')
+result.to_csv(output_file, sep=',', index=False)
+
+def plotTop10(col: str, meanPrefix: str):
+    meanCol = '{} per Count'.format(meanPrefix)
+    
+    sorted = result.sort_values(col, ascending=False)[0:11]
+    table = pd.DataFrame({
+        'Genre': sorted['Genre'],
+        col: sorted[col],
+        meanCol: sorted[meanCol] 
+    })
+
+    pd.plotting.table(
+        newAxes(), 
+        table, 
+        loc='center')
+    plt.savefig(
+        os.path.join(
+            output_folder, 
+            'top-10-by-{}.png'.format(col)
+        ), 
+        dpi=500)
+    
+    sorted = result.sort_values(meanCol, ascending=False)[0:11]
+    table = pd.DataFrame({
+        'Genre': sorted['Genre'],
+        col: sorted[col],
+        meanCol: sorted[meanCol] 
+    })
+
+    pd.plotting.table(
+        newAxes(), 
+        table,
+        loc='center')
+    plt.savefig(
+        os.path.join(
+            output_folder, 
+            'top-10-by-{}-mean.png'.format(col)
+        ), 
+        dpi=500)
+
+plotTop10('Global', 'Global')
+plotTop10('North America', 'NA')
+plotTop10('Japan', 'JP')
+plotTop10('Europe', 'EU')
+plotTop10('Rest of World', 'RW')

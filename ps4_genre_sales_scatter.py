@@ -7,12 +7,12 @@ import pandas as pd
 dt_path = getDatasetPath()
 filename = 'PS4_GamesSales.csv'
 root_folder = os.path.join(dt_path, filename[:-4])
-output_folder = os.path.join(root_folder, 'region_genre')
+output_folder = os.path.join(root_folder, 'region-genre-scatter')
 ensureExists(output_folder)
 
-region_genre_path = os.path.join(root_folder, 'region_genre.csv')
+region_genre_file_path = os.path.join(root_folder, 'region-genre', 'region_genre.csv')
 
-rg_gn = pd.read_csv(region_genre_path, encoding='ISO-8859-1')
+rg_gn = pd.read_csv(region_genre_file_path, encoding='ISO-8859-1')
 rg_gn.info()
 
 
