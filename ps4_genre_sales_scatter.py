@@ -15,17 +15,45 @@ region_genre_path = os.path.join(root_folder, 'region_genre.csv')
 rg_gn = pd.read_csv(region_genre_path, encoding='ISO-8859-1')
 rg_gn.info()
 
-newAxes()
-rg_gn.plot.scatter(x='Global', y='North America')
-plt.savefig(os.path.join(output_folder, 'global-na.svg'))
 
-newAxes()
-rg_gn.plot.scatter(x='Global', y='Europe')
-plt.savefig(os.path.join(output_folder, 'global-eu.svg'))
 
-newAxes()
-rg_gn.plot.scatter(x='Global', y='Japan')
-plt.savefig(os.path.join(output_folder, 'global-jp.svg'))
 
-rg_gn.plot.scatter(x='Global', y='Rest of World')
-plt.savefig(os.path.join(output_folder, 'global-rw.svg'))
+def plotScatter(colX: str, colY: str, output_path: str, limXY: tuple = None):
+    if limXY is not None:
+        newAxes()
+        rg_gn.plot.scatter(x=colX, y=colY, ylim= limXY, xlim= limXY)
+        plt.savefig(os.path.join(output_path, '{}-{}-limited.svg'.format(colX, colY)))    
+    else:
+        newAxes()
+        rg_gn.plot.scatter(x=colX, y=colY)
+        plt.savefig(os.path.join(output_path, '{}-{}-not-limited.svg'.format(colX, colY)))
+
+lim = (0, max(rg_gn['Global']) + rg_gn['Global'].mean()/2)
+plotScatter('Global', 'North America', output_folder, lim)
+plotScatter('Global', 'North America', output_folder)
+
+plotScatter('Global', 'Europe', output_folder, lim)
+plotScatter('Global', 'Europe', output_folder)
+
+plotScatter('Global', 'Japan', output_folder, lim)
+plotScatter('Global', 'Japan', output_folder)
+
+plotScatter('Global', 'Rest of World', output_folder, lim)
+plotScatter('Global', 'Rest of World', output_folder)
+
+
+output_folder = os.path.join(output_folder, 'means')
+ensureExists(output_folder)
+lim2 = (0, max(rg_gn['Global per Count']) + rg_gn['Global per Count'].mean() / 2)
+
+plotScatter('Global per Count', 'NA per Count', output_folder, lim2)
+plotScatter('Global per Count', 'NA per Count', output_folder)
+
+plotScatter('Global per Count', 'EU per Count', output_folder, lim2)
+plotScatter('Global per Count', 'EU per Count', output_folder)
+
+plotScatter('Global per Count', 'JP per Count', output_folder, lim2)
+plotScatter('Global per Count', 'JP per Count', output_folder)
+
+plotScatter('Global per Count', 'RW per Count', output_folder, lim2)
+plotScatter('Global per Count', 'RW per Count', output_folder)
