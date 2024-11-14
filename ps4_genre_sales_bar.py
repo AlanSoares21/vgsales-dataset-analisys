@@ -7,11 +7,12 @@ rg = readInOutputPath('region_genre.csv')
 print(rg.info())
 print(rg.describe())
 
-output_image_inches=(25,25)
+output_image_inches=(25,35)
 
 plt.rcParams.update({'legend.fontsize': 'xx-large'})
 
 rg.plot.barh(
+    subplots= True,
     x= 'Genre', 
     y=['Japan', 'Europe', 'North America', 'Rest of World'], 
     figsize=output_image_inches,
