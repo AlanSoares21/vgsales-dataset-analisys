@@ -34,6 +34,6 @@ def readInOutputPath(filename):
 def readPS4DatasetFile():
     dt_path = getDatasetPath()
     filename = 'PS4_GamesSales.csv'
-    output_folder = getOutputPath()
+    output_folder = getOutputPath('')
     ensureExists(output_folder)
     return pd.read_csv(os.path.join(dt_path, filename), encoding='ISO-8859-1')

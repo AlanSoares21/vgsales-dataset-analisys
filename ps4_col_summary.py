@@ -52,7 +52,7 @@ def getColumnsData(data: pd.DataFrame):
     print('---')
 
     # Year value count
-    data[data['Year'].isna()] = 0
+    data.loc[data['Year'].isna(), 'Year'] = 0
     year_value_count = data['Year'].value_counts()
     clearAxes(ax)
     pd.plotting.table(ax, year_value_count, loc='center', colWidths=[.2,.1])
