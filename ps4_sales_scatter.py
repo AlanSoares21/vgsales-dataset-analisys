@@ -24,3 +24,20 @@ plt.savefig(os.path.join(output_folder, 'global-jp.svg'))
 
 gs.plot.scatter(x='Global', y='Rest of World')
 plt.savefig(os.path.join(output_folder, 'global-rw.svg'))
+
+maxGlobal = max(gs['Global'])
+
+newAxes()
+gs.plot.scatter(x='Global', y='North America', ylim= (0, maxGlobal))
+plt.savefig(os.path.join(output_folder, 'max-global-na.svg'))
+
+newAxes()
+gs.plot.scatter(x='Global', y='Europe', ylim= (0, maxGlobal))
+plt.savefig(os.path.join(output_folder, 'max-global-eu.svg'))
+
+newAxes()
+gs.plot.scatter(x='Global', y='Japan', ylim= (0, maxGlobal))
+plt.savefig(os.path.join(output_folder, 'max-global-jp.svg'))
+
+gs.plot.scatter(x='Global', y='Rest of World', ylim= (0, maxGlobal))
+plt.savefig(os.path.join(output_folder, 'max-global-rw.svg'))

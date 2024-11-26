@@ -39,7 +39,11 @@ genre_sales = pd.DataFrame({
     'JP per Count': [x/y for x,y in zip(jp_sales_per_genre, genres_count)],
     'EU per Count': [x/y for x,y in zip(eu_sales_per_genre, genres_count)],
     'NA per Count': [x/y for x,y in zip(na_sales_per_genre, genres_count)],
-    'RW per Count': [x/y for x,y in zip(rw_sales_per_genre, genres_count)]
+    'RW per Count': [x/y for x,y in zip(rw_sales_per_genre, genres_count)],
+    'JP/Global': [x/y for x,y in zip(jp_sales_per_genre, gloabl_sales_per_genre)],
+    'EU/Global': [x/y for x,y in zip(eu_sales_per_genre, gloabl_sales_per_genre)],
+    'NA/Global': [x/y for x,y in zip(na_sales_per_genre, gloabl_sales_per_genre)],
+    'RW/Global': [x/y for x,y in zip(rw_sales_per_genre, gloabl_sales_per_genre)]
 })
 
 result = genre_sales.sort_values('Global', ascending=False)

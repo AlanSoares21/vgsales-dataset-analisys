@@ -22,9 +22,9 @@ bin_size = max_global/nbins
 
 print('nbins: {} \nbin_size: {}'.format(nbins, bin_size))
 
-plt.rcParams.update({'font.size': 110})
+plt.rcParams.update({'font.size': 250})
 
-output_image_inches=(150,150)
+output_image_inches=(250,300)
 
 games_sales.hist(
     column=['Global', 'Japan', 'North America', 'Europe', 'Rest of World'], 
